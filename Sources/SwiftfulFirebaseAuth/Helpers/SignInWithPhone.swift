@@ -5,6 +5,7 @@
 //  Created by Vamsi Madduluri on 10/04/24.
 //
 
+#if os(iOS)
 import FirebaseAuth
 import UIKit
 
@@ -61,3 +62,4 @@ extension SignInWithPhoneHelper: AuthUIDelegate {
         }
     }
 }
+#endif

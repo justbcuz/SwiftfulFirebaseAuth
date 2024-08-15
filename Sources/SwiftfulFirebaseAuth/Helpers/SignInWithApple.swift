@@ -5,6 +5,7 @@
 //  Created by Nick Sarno on 10/25/23.
 //
 
+#if os(iOS)
 import Foundation
 import CryptoKit
 import AuthenticationServices
@@ -202,3 +203,4 @@ extension UIViewController: ASAuthorizationControllerPresentationContextProvidin
         return self.view.window!
     }
 }
+#endif

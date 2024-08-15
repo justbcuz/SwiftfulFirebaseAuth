@@ -17,7 +17,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.0.0"),
-        .package(url: "https://github.com/google/GoogleSignIn-iOS.git", from: "7.0.0")
+//        .package(url: "https://github.com/google/GoogleSignIn-iOS.git", from: "7.0.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -26,8 +26,8 @@ let package = Package(
             name: "SwiftfulFirebaseAuth",
             dependencies: [
                 .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
-                .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
-                .product(name: "GoogleSignInSwift", package: "GoogleSignIn-iOS")
+//                .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
+//                .product(name: "GoogleSignInSwift", package: "GoogleSignIn-iOS")
             ],
             resources: [
                 .process("Support/Assets")

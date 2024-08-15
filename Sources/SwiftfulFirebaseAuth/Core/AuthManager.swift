@@ -82,6 +82,7 @@ public final class AuthManager {
         }
     }
     
+    #if os(iOS)
     public func signInGoogle(GIDClientID: String) async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         let value = try await provider.authenticateUser_Google(GIDClientID: GIDClientID)
         currentUser = AuthInfo(profile: value.user)
@@ -103,6 +104,7 @@ public final class AuthManager {
         
         return value
     }
+    #endif
     
     public func signInAnonymously() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         let value = try await provider.authenticateUser_Anonymously()
@@ -111,6 +113,7 @@ public final class AuthManager {
         return value
     }
     
+    #if os(iOS)
     public func signInPhone_Start(phoneNumber: String) async throws {
         try await provider.authenticateUser_PhoneNumber_Start(phoneNumber: phoneNumber)
     }
@@ -125,6 +128,7 @@ public final class AuthManager {
         
         return value
     }
+    #endif
     
     public func signOut() throws {
         try provider.signOut()

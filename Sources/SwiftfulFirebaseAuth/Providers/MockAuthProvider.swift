@@ -50,6 +50,7 @@ final class MockAuthProvider: AuthProvider {
         return signInMockUser()
     }
     
+    #if os(iOS)
     func authenticateUser_Google(GIDClientID: String) async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         try? await Task.sleep(nanoseconds: 1_000_000_000)
         return signInMockUser()
@@ -68,6 +69,7 @@ final class MockAuthProvider: AuthProvider {
         try? await Task.sleep(nanoseconds: 1_000_000_000)
         return signInMockUser()
     }
+    #endif
     
     private func signInMockUser() -> (user: UserAuthInfo, isNewUser: Bool) {
         let count = UserDefaults.userSignedInAuthCount

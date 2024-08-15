@@ -5,6 +5,7 @@
 //  Created by Nick Sarno on 10/25/23.
 //
 
+#if os(iOS)
 import Foundation
 import SwiftUI
 import UIKit
@@ -82,3 +83,4 @@ final class SignInWithGoogleHelper {
         }
     }
 }
+#endif

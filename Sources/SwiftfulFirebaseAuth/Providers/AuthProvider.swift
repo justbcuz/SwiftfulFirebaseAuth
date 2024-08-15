@@ -12,15 +12,17 @@ public protocol AuthProvider {
     func getAuthenticatedUser() -> UserAuthInfo?
     func authenticationDidChangeStream() -> AsyncStream<UserAuthInfo?>
     func authenticateUser_Anonymously() async throws -> (user: UserAuthInfo, isNewUser: Bool)
+    #if os(iOS)
     func authenticateUser_Google(GIDClientID: String) async throws -> (user: UserAuthInfo, isNewUser: Bool)
     func authenticateUser_Apple() async throws -> (user: UserAuthInfo, isNewUser: Bool)
     func authenticateUser_PhoneNumber_Start(phoneNumber: String) async throws
     func authenticateUser_PhoneNumber_Verify(code: String) async throws -> (user: UserAuthInfo, isNewUser: Bool)
+    #endif
     func signOut() throws
     func deleteAccount() async throws
 }
 
-public struct UserAuthInfo: Codable {
+public struct UserAuthInfo: Sendable, Codable {
     public let uid: String
     public let email: String?
     public let isAnonymous: Bool
@@ -88,7 +90,7 @@ public struct UserAuthInfo: Codable {
     }
 }
 
-public enum AuthProviderOption: String, Codable {
+public enum AuthProviderOption: String, Sendable, Codable {
     case anonymously = "anonymously"
     case google = "google.com"
     case apple = "apple.com"

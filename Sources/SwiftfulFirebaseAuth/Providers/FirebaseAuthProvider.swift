@@ -58,6 +58,7 @@ struct FirebaseAuthProvider: AuthProvider {
         return (user, isNewUser)
     }
     
+    #if os(iOS)
     @MainActor
     func authenticateUser_Apple() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         let helper = SignInWithAppleHelper()
@@ -170,6 +171,7 @@ struct FirebaseAuthProvider: AuthProvider {
         
         return (user, isNewUser)
     }
+    #endif
     
     func signOut() throws {
         try auth.signOut()
