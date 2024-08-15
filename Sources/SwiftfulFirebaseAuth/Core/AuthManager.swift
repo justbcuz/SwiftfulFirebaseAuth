@@ -110,6 +110,10 @@ public final class AuthManager {
         let value = try await provider.authenticateUser_Anonymously()
         currentUser = AuthInfo(profile: value.user)
         
+        defer {
+            streamSignInChangesIfNeeded()
+        }
+        
         return value
     }
     

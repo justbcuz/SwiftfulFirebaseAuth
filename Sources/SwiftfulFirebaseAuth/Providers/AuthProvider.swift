@@ -22,7 +22,7 @@ public protocol AuthProvider {
     func deleteAccount() async throws
 }
 
-public struct UserAuthInfo: Sendable, Codable {
+public struct UserAuthInfo: Codable {
     public let uid: String
     public let email: String?
     public let isAnonymous: Bool
@@ -65,7 +65,7 @@ public struct UserAuthInfo: Sendable, Codable {
         self.uid = user.uid
         self.email = user.email
         self.isAnonymous = user.isAnonymous
-        self.authProviders = user.providerData.compactMap({ AuthProviderOption(rawValue: $0.providerID) })
+        self.authProviders = UserAuthInfo.createAuthProviders(rawValues: user.providerData, isAnonymous: user.isAnonymous)
         self.displayName = user.displayName
         self.firstName = UserDefaults.auth.firstName
         self.lastName = UserDefaults.auth.lastName
@@ -73,6 +73,17 @@ public struct UserAuthInfo: Sendable, Codable {
         self.photoURL = user.photoURL
         self.creationDate = user.metadata.creationDate
         self.lastSignInDate = user.metadata.lastSignInDate
+    }
+    
+    static private func createAuthProviders(rawValues: [any UserInfo], isAnonymous: Bool) -> [AuthProviderOption] {
+        // Note: Firebase Anonymous auth does not return a string for Auth Provider. Here we catch that edge case.
+        var providers = rawValues.compactMap({ AuthProviderOption(rawValue: $0.providerID) })
+        
+        if providers.isEmpty && isAnonymous {
+            providers.append(.anonymous)
+        }
+        
+        return providers
     }
     
     enum CodingKeys: String, CodingKey {
@@ -90,8 +101,8 @@ public struct UserAuthInfo: Sendable, Codable {
     }
 }
 
-public enum AuthProviderOption: String, Sendable, Codable {
-    case anonymously = "anonymously"
+public enum AuthProviderOption: String, Codable {
+    case anonymous = "anonymous"
     case google = "google.com"
     case apple = "apple.com"
     case email = "password"
